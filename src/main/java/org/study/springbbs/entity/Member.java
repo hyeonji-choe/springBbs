@@ -1,25 +1,34 @@
 package org.study.springbbs.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDateTime;
-
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-@Data
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 @Entity
-@Table(name="user")
-public class User extends BaseEntity{
+@Table(name="member")
+public class Member extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Integer id;
-    private String userName;
-    private String passWord;
+    @Column(nullable = false)
+    private String username;
+    @Column(nullable = false)
+    private String password;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
 
+    @Builder
+    public Member(String username,String password,Role role){
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
+
+    public String getRoleKey(){
+        return this.role.getKey();
+    }
 }

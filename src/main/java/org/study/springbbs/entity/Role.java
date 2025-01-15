@@ -1,4 +1,4 @@
-package org.study.springbbs.domain.member;
+package org.study.springbbs.entity;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

@@ -1,10 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<th:block layout:fragment="head">
+    <title>Spring Boot - POST</title>
+</th:block>
+
 <body>
-$END$
+<th:block layout:fragment="header" class="header">
+    <h2>POST</h2>
+</th:block>
+
+<div layout:fragment="content" class="content">
+    <div th:if="${#lists.isEmpty(posts)}">작성된 글이 없습니다.</div>
+    <div th:unless="${#lists.isEmpty(posts)}">
+        <table style="border:1px">
+            <tr>
+                <th>No</th>
+                <th>Title</th>
+                <th>Content</th>
+                <th>Writer</th>
+                <th>CreateAt</th>
+                <th>UpdateAt</th>
+            </tr>
+            <tr th:each="post : ${posts}">
+                <td th:text="${post.id}">No</td>
+                <td th:text="${post.title}">Title</td>
+                <td th:text="${post.content}" th:onclick="|location.href='/post/${post.id}'|">Content</td>
+                <td th:text="${post.member.username}">Writer</td>
+                <td th:text="${post.createdAt}">CreateAt</td>
+                <td th:text="${post.updatedAt}">UpdateAt</td>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <button type="button" class="primary" onclick="location.href='/post/regist'">Post등록하기</button>
+    </div>
+</div>
+<th:block layout:fragment="footer" th:include="~{@{/layout/footer}}"></th:block>
 </body>
 </html>

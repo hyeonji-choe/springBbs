@@ -4,28 +4,36 @@
       layout:decorate="~{layout/layout}">
 
 <th:block layout:fragment="head">
-  <title>Spring Boot - POST</title>
+    <title>Spring Boot - POST</title>
 </th:block>
 
 <body>
 <th:block layout:fragment="header" class="header">
-  <h2>POST 등록</h2>
+  <h2>POST 상세</h2>
 </th:block>
 
 <div layout:fragment="content" class="content">
-  <form class="post-form" method="post" action="/api/post">
-  <table>
-      <tr>
-        <td>Title</td>
-        <td><input type="text" name="title"></input></td>
-      </tr>
-      <tr>
-        <td>Content</td>
-        <td><input type="text" name="content"></input></td>
-      </tr>
-    </table>
-    <button type="submit" class="primary">Regist</button>
+  <form class="post-form" th:method="post" th:action="|/api/post/${post.id}|">
+      <input type="hidden" name="_method" value="PUT"/>
+      <table>
+          <tr>
+            <td>Title</td>
+            <td><input type="text" id="title" name="title" th:value="${post.title}"></input></td>
+          </tr>
+          <tr>
+            <td>Content</td>
+            <td><input type="text" id="content" name="content" th:value="${post.content}"></input></td>
+          </tr>
+          <tr>
+              <td>Writer</td>
+              <td th:text="${post.member.username}">Writer</td>
+          </tr>
+      </table>
+      <div>
+          <button type="submit" class="primary">수정하기</button>
+      </div>
   </form>
+
 </div>
 <th:block layout:fragment="footer" th:include="~{@{/layout/footer}}"></th:block>
 </body>
